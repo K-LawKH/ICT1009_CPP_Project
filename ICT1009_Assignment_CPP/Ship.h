@@ -56,13 +56,13 @@ public:
 	int getBasicLoad() const;
 	void setBasicLoad(int);
 	int getHeavyLoad() const;
-	void setHeavyLoad() const;
+	void setHeavyLoad(int);
 	int getLiquidLoad() const;
-	void setLiquidLoad(int) const;
+	void setLiquidLoad(int);
 	int getRefrigeratedLoad() const;
 	void setRefrigeratedLoad(int);
 	int getSpecialLoad() const;
-	void setSpecialLoad() const;
+	void setSpecialLoad(int);
 
 	double getBasicPrice() const;
 	void setBasicPrice(double);
@@ -92,7 +92,7 @@ public:
 	int getCurrentSpecialTotal() const;
 	void setCurrentSpecialTotal(int);
 	int getCurrentSpecialBasic() const;
-	void setCurrentSpecialBasic();
+	void setCurrentSpecialBasic(int);
 	int getCurrentSpecialHeavy() const;
 	void setCurrentSpecialHeavy(int);
 	int getCurrentSpecialLiquid() const;
@@ -107,18 +107,18 @@ public:
 	bool getLiquidIsFull() const;
 	void setLiquidIsFull(bool);
 	bool getRefrigIsFull() const;
-	void setLiquidIsFull(bool);
+	void setRefrigIsFull(bool);
 	bool getSpecialIsFull() const;
 	void setSpecialIsFull(bool);
 
 	//Methods
-	void updateShipDetails();
-	void updateShipContainerInfo();
-	int fill(int, int);
+	//void updateShipDetails();
+	//void updateShipContainerInfo();
+	//int fill(int, int);
 	void checkFull();
 	bool isShipFull();
 	string getDate();
-	void updateDate(int, int, int);
+	void setDate(int, int, int);
 };
 #endif // !SHIP_H
 
