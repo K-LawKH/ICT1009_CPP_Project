@@ -6,8 +6,8 @@ using namespace std;
 
 class Refrigerated : public Heavy {
 public:
-	Refrigerated() :Basic() {};
-	Refrigerated(string type, int amount, bool isSpecial, string specialProperties) : Basic(type, amount,
+	Refrigerated() :Heavy() {};
+	Refrigerated(string type, int amount, bool isSpecial, string specialProperties) : Heavy(type, amount,
 		isSpecial, specialProperties) {};
 };
 #endif // !REFRIGERATED_H

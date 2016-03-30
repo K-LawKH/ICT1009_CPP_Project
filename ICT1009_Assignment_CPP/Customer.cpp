@@ -57,12 +57,7 @@ void Customer::setContainerArray(vector<Container *> temp) { this->containerArra
 //Methods
 string Customer::getDate() {
 	stringstream ss;
-	if (this->day >= 1 && this->day <= 9) {
-		ss << "0" << this->day << "-";
-	}
-	else {
-		ss << this->day << "-";
-	}
+	ss << this->year << "-";
 
 	if (this->month >= 1 && this->month <= 9) {
 		ss << "0" << this->month << "-";
@@ -71,7 +66,14 @@ string Customer::getDate() {
 		ss << this->month << "-";
 	}
 
-	ss << this->year << " 00:00:00";
+	if (this->day >= 1 && this->day <= 9) {
+		ss << "0" << this->day;
+	}
+	else {
+		ss << this->day;
+	}
+
+	ss << " 00:00:00";
 
 	return ss.str();
 }
