@@ -136,12 +136,7 @@ void Ship::setSpecialIsFull(bool flag) { this->specialIsFull = flag; }
 //Methods
 string Ship::getDate() {
 	stringstream ss;
-	if (this->day >= 1 && this->day <= 9) {
-		ss << "0" << this->day << "-";
-	}
-	else {
-		ss << this->day << "-";
-	}
+	ss << this->year << "-";
 
 	if (this->month >= 1 && this->month <= 9) {
 		ss << "0" << this->month << "-";
@@ -150,7 +145,14 @@ string Ship::getDate() {
 		ss << this->month << "-";
 	}
 
-	ss << this->year << " 00:00:00";
+	if (this->day >= 1 && this->day <= 9) {
+		ss << "0" << this->day;
+	}
+	else {
+		ss << this->day;
+	}
+
+	ss << " 00:00:00";
 
 	return ss.str();
 }
