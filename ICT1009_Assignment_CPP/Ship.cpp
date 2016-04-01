@@ -1,17 +1,33 @@
 #include <string>
 #include <iostream>
+#include <algorithm>
 #include <iomanip>
 #include <sstream>
 #include "Ship.h"
 using namespace std;
 
 //Empty Constructor
-Ship::Ship() { this->shipName = ""; }
+Ship::Ship() { 
+	this->shipName = ""; 
+	currentMaxLoad = 0, currentBasicLoad = 0, currentHeavyLoad = 0, currentRefrigLoad = 0, currentLiquidLoad = 0;
+	currentSpecialTotal = 0;
+	currentSpecialBasic = 0;
+	currentSpecialHeavy = 0;
+	currentSpecialRefrig = 0;
+	currentSpecialLiquid = 0;
+	double currentCost = 0;
+}
 //Constructor with everything
 Ship::Ship(string shipName, string owner, double value, string company, int maxLoad, int basicLoad, double basicPrice, 
 	int heavyLoad, double heavyPrice, int liquidLoad, double liquidPrice, int refrigLoad, double refrigPrice,
 	int specialLoad, double specialPrice, string country, string port, int day, int month, int year)
 {
+	currentMaxLoad = 0, currentBasicLoad = 0, currentHeavyLoad = 0, currentRefrigLoad = 0, currentLiquidLoad = 0;
+	currentSpecialTotal = 0;
+	currentSpecialBasic = 0;
+	currentSpecialHeavy = 0;
+	currentSpecialRefrig = 0;
+	currentSpecialLiquid = 0;
 	this->shipName = shipName;
 	this->owner = owner;
 	this->shipValue = value;
@@ -39,6 +55,12 @@ Ship::Ship(string shipName, string owner, double value, string company, int maxL
 Ship::Ship(string shipName, string owner, double value, string company, int maxLoad, int basicLoad, double basicPrice,
 	int heavyLoad, double heavyPrice, int liquidLoad, double liquidPrice ,string country, string port, int day, int month, int year)
 {
+	currentMaxLoad = 0, currentBasicLoad = 0, currentHeavyLoad = 0, currentRefrigLoad = 0, currentLiquidLoad = 0;
+	currentSpecialTotal = 0;
+	currentSpecialBasic = 0;
+	currentSpecialHeavy = 0;
+	currentSpecialRefrig = 0;
+	currentSpecialLiquid = 0;
 	this->shipName = shipName;
 	this->owner = owner;
 	this->shipValue = value;
@@ -98,30 +120,179 @@ void Ship::setRefrigeratedePrice(double price) { this->refrigeratedPrice = price
 double Ship::getSpecialPrice() const { return this->specialPrice; }
 void Ship::setSpecialPrice(double price) { this->specialPrice = price; }
 
-double Ship::getCurrentCost() const { return this->currentCost; }
-void Ship::setCurrentCost(double cost) { this->currentCost = cost; }
+int Ship::getDay()
+{
+	return this->day;
+}
+int Ship::getMonth()
+{
+	return this->month;
+}
+int Ship::getYear()
+{
+	return this->year;
+}
 
-int Ship::getCurrentMaxLoad() const { return this->currentMaxLoad; }
-void Ship::setCurrentMaxLoad(int load) { this->currentMaxLoad = load; }
+double Ship::getCurrentCost() const { return this->currentCost; }
+
 int Ship::getCurrentBasicLoad() const { return this->currentBasicLoad; }
-void Ship::setCurrentBasicLoad(int load) { this->currentBasicLoad = load; }
+int Ship::setCurrentBasicLoad(int load) 
+{ 
+	int remainder = 0;
+	// can fit
+	if ((basicLoad - currentBasicLoad) >= load)
+	{
+		currentBasicLoad += load;
+	}
+	// cannot fit
+	else
+	{
+		remainder = load - (basicLoad - currentBasicLoad);
+		currentBasicLoad = basicLoad;
+	}
+	checkFull();
+	return remainder;
+}
 int Ship::getCurrentHeavyLoad() const { return this->currentHeavyLoad; }
-void Ship::setCurrentHeavyLoad(int load) { this->currentHeavyLoad = load; }
+int Ship::setCurrentHeavyLoad(int load)
+{
+	int remainder = 0;
+	// can fit
+	if ((heavyLoad - currentHeavyLoad) >= load)
+	{
+		currentHeavyLoad += load;
+	}
+	// cannot fit
+	else
+	{
+		remainder = load - (heavyLoad - currentHeavyLoad);
+		currentHeavyLoad = heavyLoad;
+	}
+	checkFull();
+	return remainder;
+}
 int Ship::getCurrentRefrigLoad() const { return this->currentRefrigLoad; }
-void Ship::setCurrentRefrigLoad(int load) { this->currentRefrigLoad = load; }
+int Ship::setCurrentRefrigLoad(int load)
+{
+	int remainder = 0;
+	// can fit
+	if ((refrigeratedLoad - currentRefrigLoad) >= load)
+	{
+		currentRefrigLoad += load;
+	}
+	// cannot fit
+	else
+	{
+		remainder = load - (refrigeratedLoad - currentRefrigLoad);
+		currentRefrigLoad = refrigeratedLoad;
+	}
+	checkFull();
+	return remainder;
+}
 int Ship::getCurrentLiquidLoad() const { return this->currentLiquidLoad; }
-void Ship::setCurrentLiquidLoad(int load) { this->currentLiquidLoad = load; }
+int Ship::setCurrentLiquidLoad(int load)
+{
+	int remainder = 0;
+	// can fit
+	if ((liquidLoad - currentLiquidLoad) >= load)
+	{
+		currentLiquidLoad += load;
+	}
+	// cannot fit
+	else
+	{
+		remainder = load - (liquidLoad - currentLiquidLoad);
+		currentLiquidLoad = liquidLoad;
+	}
+	checkFull();
+	return remainder;
+}
 
 int Ship::getCurrentSpecialTotal() const { return this->currentSpecialTotal; }
-void Ship::setCurrentSpecialTotal(int load) { this->currentSpecialTotal = load; }
 int Ship::getCurrentSpecialBasic() const { return this->currentSpecialBasic; }
-void Ship::setCurrentSpecialBasic(int  load) { this->currentSpecialBasic = load; }
+int Ship::setCurrentSpecialBasic(int load)
+{
+	int remainder = 0;
+	// can fit
+	if ((basicLoad - currentBasicLoad) >= load && (specialLoad - currentSpecialTotal) >= load)
+	{
+		currentBasicLoad += load;
+		currentSpecialTotal = load;
+	}
+	// cannot fit
+	else
+	{
+		int max = min((basicLoad - currentBasicLoad), (specialLoad - currentSpecialTotal));
+		remainder = load - max;
+		currentBasicLoad += max;
+		currentSpecialTotal += max;
+	}
+	checkFull();
+	return remainder;
+}
 int Ship::getCurrentSpecialHeavy() const { return this->currentSpecialHeavy; }
-void Ship::setCurrentSpecialHeavy(int load) { this->currentSpecialHeavy = load; }
+int Ship::setCurrentSpecialHeavy(int load)
+{
+	int remainder = 0;
+	// can fit
+	if ((heavyLoad - currentHeavyLoad) >= load && (specialLoad - currentSpecialTotal) >= load)
+	{
+		currentHeavyLoad += load;
+		currentSpecialTotal = load;
+	}
+	// cannot fit
+	else
+	{
+		int max = min((heavyLoad - currentHeavyLoad), (specialLoad - currentSpecialTotal));
+		remainder = load - max;
+		currentHeavyLoad += max;
+		currentSpecialTotal += max;
+	}
+	checkFull();
+	return remainder;
+}
 int Ship::getCurrentSpecialLiquid() const { return this->currentSpecialLiquid; }
-void Ship::setCurrentSpecialLiquid(int load) { this->currentSpecialLiquid = load; }
+int Ship::setCurrentSpecialLiquid(int load)
+{
+	int remainder = 0;
+	// can fit
+	if ((liquidLoad - currentLiquidLoad) >= load && (specialLoad - currentSpecialTotal) >= load)
+	{
+		currentLiquidLoad += load;
+		currentSpecialTotal = load;
+	}
+	// cannot fit
+	else
+	{
+		int max = min((liquidLoad - currentLiquidLoad), (specialLoad - currentSpecialTotal));
+		remainder = load - max;
+		currentLiquidLoad += max;
+		currentSpecialTotal += max;
+	}
+	checkFull();
+	return remainder;
+}
 int Ship::getCurrentSpecialRefrig() const { return this->currentSpecialRefrig; }
-void Ship::setCurrentSpecialRefrig(int load) { this->currentSpecialRefrig = load; }
+int Ship::setCurrentSpecialRefrig(int load)
+{
+	int remainder = 0;
+	// can fit
+	if ((refrigeratedLoad - currentRefrigLoad) >= load && (specialLoad - currentSpecialTotal) >= load)
+	{
+		currentRefrigLoad += load;
+		currentSpecialTotal = load;
+	}
+	// cannot fit
+	else
+	{
+		int max = min((refrigeratedLoad - currentRefrigLoad), (specialLoad - currentSpecialTotal));
+		remainder = load - max;
+		currentRefrigLoad += max;
+		currentSpecialTotal += max;
+	}
+	checkFull();
+	return remainder;
+}
 
 bool Ship::getBasicIsFull() const { return this->basicIsFull; }
 void Ship::setBasicIsFull(bool flag) { this->basicIsFull = flag; }
@@ -163,8 +334,23 @@ void Ship::setDate(int day, int month, int year) {
 	this->year = year;
 }
 
-bool Ship::isShipFull() { return false; }
-void Ship::checkFull() { }
+bool Ship::isShipFull() 
+{
+	return (basicIsFull && heavyIsFull && refrigIsFull && specialIsFull && liquidIsFull); 
+}
+void Ship::checkFull() 
+{
+	if (currentBasicLoad >= basicLoad) basicIsFull = true;
+	else basicIsFull = false;
+	if (currentHeavyLoad >= heavyLoad) heavyIsFull = true;
+	else heavyIsFull = false;
+	if (currentRefrigLoad >= refrigeratedLoad) refrigIsFull = true;
+	else refrigIsFull = false;
+	if (currentSpecialTotal >= specialLoad) specialIsFull = true;
+	else specialIsFull = false;
+	if (currentLiquidLoad >= liquidLoad) liquidIsFull = true;
+	else liquidIsFull = false;
+}
 
 ostream& operator<<(ostream& out, const Ship& aShip) {
 	out << setfill('-') << setw(40) << "-" << endl;

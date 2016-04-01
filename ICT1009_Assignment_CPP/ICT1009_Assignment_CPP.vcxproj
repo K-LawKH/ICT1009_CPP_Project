@@ -146,6 +146,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\CPP_Assignment\ICT1009_CPP_Project\ICT1009_Assignment_CPP\concol.h" />
+    <ClInclude Include="..\..\..\CPP_Assignment\ICT1009_CPP_Project\ICT1009_Assignment_CPP\Sorting.h" />
     <ClInclude Include="Basic.h" />
     <ClInclude Include="Container.h" />
     <ClInclude Include="CRUDFunction.h" />
@@ -153,13 +155,16 @@
     <ClInclude Include="FileDialog.h" />
     <ClInclude Include="Heavy.h" />
     <ClInclude Include="Liquid.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="MinShipsSort.h" />
     <ClInclude Include="Refrigerated.h" />
     <ClInclude Include="Ship.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\CPP_Assignment\ICT1009_CPP_Project\ICT1009_Assignment_CPP\Sorting.cpp" />
     <ClCompile Include="Container.cpp" />
-    <ClCompile Include="CRUDFunction.cpp" />
     <ClCompile Include="Customer.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="MinShipsSort.cpp" />
     <ClCompile Include="Ship.cpp" />

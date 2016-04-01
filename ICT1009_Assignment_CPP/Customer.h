@@ -35,6 +35,9 @@ public:
 	bool updateCust(string, int, string);
 	string getDate();
 	void setDate(int, int, int);
+	int getDay();
+	int getMonth();
+	int getYear();
 };
 #endif // ! CUSTOMER_H
 
