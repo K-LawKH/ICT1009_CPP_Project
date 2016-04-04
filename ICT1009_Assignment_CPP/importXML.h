@@ -4,6 +4,7 @@
 #include "sstream"
 #include <cstdlib>
 #include <stdexcept>
+#include <algorithm>
 #include <exception>
 #include <string>
 #include <stdio.h>
@@ -80,36 +81,55 @@ public:
 	}
 };
 
+class my_exception2 : virtual public std::exception
+{
+public:
+	my_exception2() {};
+
+	const char* what() const
+	{
+		return "Error, value cannot be negative!";
+	}
+};
+
+class my_exception3 : virtual public std::exception
+{
+public:
+	my_exception3() {};
+
+	const char* what() const
+	{
+		return "Error, Customer ID is already Taken.";
+	}
+};
+
 #define throwx(EX) (throw make_traced_error(__FILE__,__LINE__,EX))
 
-//checking for null values
-String^ isNull(String^ );
 
+String^ isNull(String^ );
 double checkForDouble(String^);
 int checkForInt(String^);
+int checkForNegativeInt(int s);
+double checkForNegativeDouble(double s);
+String^ checkForUniqueID(String^ s);
 
 
 int getxmlShipdata(std::string, vector<Ship>& );
-
 int getxmlContainerdata(std::string containerFile, vector<Customer>& , vector<Container *> );
 
 
 //checking if the file is an xml
 bool checkIfXML(const std::string& );
-
 //using a recursive method to get the all the files in seperate directories
 int getdir(string dir, vector<string>&);
 
 
 //check if container file is correct
 int checkContainerFile(std::string );
-
 //check if ship file is correct
 int checkShipFile(std::string );
 
 void printShips(vector<Ship>& );
-
-
 void printCustomers(vector<Customer>& );
 
 int importXML(string);

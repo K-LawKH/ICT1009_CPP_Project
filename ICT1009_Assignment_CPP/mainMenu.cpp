@@ -33,7 +33,8 @@ int main(int argc, const char *argv[])
 	{
 	case 1:
 		path = BrowseFolder();
-		cout << white << path << endl;
+		cout << green <<"This is the path folder: " << path << endl;
+		cout << white << endl;
 		importXML(path);
 		system("pause");
 	case 0:

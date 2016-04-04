@@ -8,63 +8,6 @@ using namespace std;
 
 void printCustomers(vector<Customer>&);
 
-//NOTE: check if pass value is int or perfect string? 
-//throw exception with filename and error
-
-//template<class EX>
-//class traced_error : virtual public std::exception, virtual public EX
-//{
-//public:
-//	traced_error(const std::string& file, int line, const EX& ex)
-//		: EX(ex),
-//		line_(line),
-//		file_(file)
-//	{
-//	}
-//
-//	const char* what() const
-//	{
-//		std::stringstream ss;
-//		static std::string msg;
-//		ss << "File: " << file_ << " Line: " << line_ << " Error: " << EX::what();
-//		msg = ss.str().c_str();
-//		return msg.c_str();
-//	}
-//
-//	int line_;
-//	std::string file_;
-//};
-//
-//template<class EX> traced_error<EX> make_traced_error(const std::string& file, int line, const EX& ex)
-//{
-//	return traced_error<EX>(file, line, ex);
-//}
-//
-//
-//class my_exception : virtual public std::exception
-//{
-//public:
-//	my_exception() {};
-//
-//	const char* what() const
-//	{
-//		return "Invalid Format (Double / Int)";
-//	}
-//};
-//
-//class my_exception1 : virtual public std::exception
-//{
-//public:
-//	my_exception1() {};
-//
-//	const char* what() const
-//	{
-//		return "Error, field cannot be null!";
-//	}
-//};
-//
-//#define throwx(EX) (throw make_traced_error(__FILE__,__LINE__,EX))
-
 //checking for null values
 String^ isNull(String^ s)
 {
@@ -101,6 +44,43 @@ int checkForInt(String^ s)
 		throwx(my_exception());
 	}
 }
+
+int checkForNegativeInt(int s)
+{
+	
+		if (s < 0) {
+			throwx(my_exception2());
+		}
+		else {
+			return s;
+		}
+
+}
+
+double checkForNegativeDouble(double s)
+{
+	if (s < 0) {
+		throwx(my_exception2());
+	}
+	else {
+		return s;
+	}
+}
+
+
+string checkForUniqueID(string s, vector<string>& v)
+{
+
+	if (std::find(v.begin(), v.end(), s) != v.end()) {
+		throwx(my_exception3());
+	}
+	else {
+		return s;
+	}
+
+
+}
+
 
 int getxmlShipdata(std::string shipFile, vector<Ship>& shipFiles )
 {
@@ -170,7 +150,7 @@ int getxmlShipdata(std::string shipFile, vector<Ship>& shipFiles )
 					shipValue = reader->Value;
 					//Console::Write("\nShip Value: " + shipValue);
 				}
-				standardShipValue = checkForDouble(isNull(shipValue));
+				standardShipValue = checkForNegativeDouble(checkForDouble(isNull(shipValue)));
 				if (reader->Name == "company") {
 					reader->Read();
 					shipCompany = isNull(reader->Value);
@@ -185,7 +165,7 @@ int getxmlShipdata(std::string shipFile, vector<Ship>& shipFiles )
 						//Console::Write("\nMax Load: " + maxLoad);
 					}
 				}
-				standardShipAllMaxLoad = checkForInt(isNull(maxLoad));
+				standardShipAllMaxLoad = checkForNegativeInt(checkForInt(isNull(maxLoad)));
 				if (reader->Name == "container") {
 					if (reader->GetAttribute("type") == "basic" || reader->GetAttribute("type_ID") == "basic") {
 						reader->Read();
@@ -218,8 +198,8 @@ int getxmlShipdata(std::string shipFile, vector<Ship>& shipFiles )
 						}
 
 					}
-					standardShipBasicLoad = checkForInt(isNull(basicLoad));
-					standardShipBasicPrice = checkForDouble(isNull(basicPrice));
+					standardShipBasicLoad = checkForNegativeInt(checkForInt(isNull(basicLoad)));
+					standardShipBasicPrice = checkForNegativeDouble(checkForDouble(isNull(basicPrice)));
 					//-----------------End of Basic----------------------------------------------------------
 
 					if (reader->GetAttribute("type") == "heavy" || reader->GetAttribute("type_ID") == "heavy") {
@@ -252,8 +232,8 @@ int getxmlShipdata(std::string shipFile, vector<Ship>& shipFiles )
 						}
 
 					}
-					standardShipHeavyLoad = checkForInt(isNull(heavyLoad));
-					standardShipHeavyPrice = checkForDouble(isNull(heavyPrice));
+					standardShipHeavyLoad = checkForNegativeInt(checkForInt(isNull(heavyLoad)));
+					standardShipHeavyPrice = checkForNegativeDouble(checkForDouble(isNull(heavyPrice)));
 					//-----------------End of Heavy----------------------------------------------------------
 					if (reader->GetAttribute("type") == "special" || reader->GetAttribute("type_ID") == "special") {
 						reader->Read();
@@ -279,13 +259,13 @@ int getxmlShipdata(std::string shipFile, vector<Ship>& shipFiles )
 							if (reader->Name == ("max_load")) {
 								//reader->ReadToNextSibling("price_per_container");
 								reader->Read();
-								specialPrice = reader->Value;
+						       		specialPrice = reader->Value;
 								//Console::Write("\nSpecial Load: " + specialLoad);
 							}
 						}
 					}
-					standardShipSpecialLoad = checkForInt(isNull(specialLoad));
-					standardShipSpecialPrice = checkForDouble(isNull(specialPrice));
+					standardShipSpecialLoad = checkForNegativeInt(checkForInt(isNull(specialLoad)));
+					standardShipSpecialPrice = checkForNegativeDouble(checkForDouble(isNull(specialPrice)));
 					//-----------------End of Special----------------------------------------------------------
 
 					if (reader->GetAttribute("type") == "refrigerated" || reader->GetAttribute("type_ID") == "refrigerated") {
@@ -317,8 +297,8 @@ int getxmlShipdata(std::string shipFile, vector<Ship>& shipFiles )
 							}
 						}
 					}
-					standardShipRefrigeratedLoad = checkForInt(isNull(refrigeratedLoad));
-					standardShipRefrigeratedPrice = checkForDouble(isNull(refrigeratedPrice));
+					standardShipRefrigeratedLoad = checkForNegativeInt(checkForInt(isNull(refrigeratedLoad)));
+					standardShipRefrigeratedPrice = checkForNegativeDouble(checkForDouble(isNull(refrigeratedPrice)));
 					//-----------------End of Refrigerated----------------------------------------------------------
 
 					if (reader->GetAttribute("type") == "liquid" || reader->GetAttribute("type_ID") == "liquid") {
@@ -351,8 +331,8 @@ int getxmlShipdata(std::string shipFile, vector<Ship>& shipFiles )
 						}
 
 					}
-					standardShipLiquidLoad = checkForInt(isNull(liquidLoad));
-					standardShipLiquidPrice = checkForDouble(isNull(liquidPrice));
+					standardShipLiquidLoad = checkForNegativeInt(checkForInt(isNull(liquidLoad)));
+					standardShipLiquidPrice = checkForNegativeInt(checkForDouble(isNull(liquidPrice)));
 					//-----------------End of Liquid----------------------------------------------------------
 				}
 				//--------------------------End of Container---------------------------------------------
@@ -391,9 +371,9 @@ int getxmlShipdata(std::string shipFile, vector<Ship>& shipFiles )
 						//Console::Write("\nYear: " + year);
 					}
 				}
-				standardShipDate = checkForInt(isNull(date));
-				standardShipMonth = checkForInt(isNull(month));
-				standardShipYear = checkForInt(isNull(year));
+				standardShipDate = checkForNegativeInt(checkForInt(isNull(date)));
+				standardShipMonth = checkForNegativeInt(checkForInt(isNull(month)));
+				standardShipYear = checkForNegativeInt(checkForInt(isNull(year)));
 
 			}
 		}
@@ -423,13 +403,13 @@ int getxmlShipdata(std::string shipFile, vector<Ship>& shipFiles )
 	return 1;
 }
 
-int getxmlContainerdata(std::string containerFile, vector<Customer>& customerFiles, vector<Container *> containerFiles)
+int getxmlContainerdata(std::string containerFile, vector<Customer>& customerFiles, vector<Container *> containerFiles, vector<string>& customerID)
 {
 
-
+	//vector<string> customerID;
 	XmlTextReader^ reader = nullptr;
 	String^ filename = gcnew String(containerFile.c_str());   //Convert from standard string to System String
-	String^ custID = """";
+	string custID = """";
 	String^ name = """";
 	String^ age = "0";
 	String^ company = """";
@@ -471,17 +451,23 @@ int getxmlContainerdata(std::string containerFile, vector<Customer>& customerFil
 
 	try
 	{
+		 string standardCust;
+		//string standardCustID;
+
 		reader = gcnew XmlTextReader(filename);
 		reader->WhitespaceHandling = WhitespaceHandling::None;
 		while (reader->Read())
 		{
-			switch (reader->NodeType)
+			switch (reader->NodeType) 
 			{
 			case XmlNodeType::Element:
 				if (reader->Name == "customer") {
-					custID = isNull(reader->GetAttribute("ID"));
+					custID = checkForUniqueID(msclr::interop::marshal_as<string>(isNull(reader->GetAttribute("ID"))),customerID);
+					customerID.push_back(custID);
+
 					//Console::Write("Customer ID: " + custID);
 				}
+
 				if (reader->Name == "name") {
 					reader->Read();
 					name = isNull(reader->Value);
@@ -492,7 +478,7 @@ int getxmlContainerdata(std::string containerFile, vector<Customer>& customerFil
 					age = reader->Value;
 					//Console::Write("\nAge: " + age);
 				}
-				standardAge = checkForInt(isNull(age));
+				standardAge = checkForNegativeInt(checkForInt(isNull(age)));
 				if (reader->Name == "company") {
 					reader->Read();
 					company = isNull(reader->Value);
@@ -509,7 +495,7 @@ int getxmlContainerdata(std::string containerFile, vector<Customer>& customerFil
 							standardSpecialProperty = "<null>";
 							//Console::Write("\nBasic Load: " + basicLoad);
 						}
-						int standardBasicLoad = checkForInt(isNull(basicLoad));
+						int standardBasicLoad = checkForNegativeInt(checkForInt(isNull(basicLoad)));
 						//string standardSpecialProperty = msclr::interop::marshal_as<string>(specialProperty);
 						containerFiles.push_back(new Basic (standardBasic, standardBasicLoad, standardIsSpecial, standardSpecialProperty));
 					}
@@ -543,7 +529,7 @@ int getxmlContainerdata(std::string containerFile, vector<Customer>& customerFil
 								//Console::Write("\nSpecial Property: " + specialProperty);
 							}
 						}
-						int standardBasicSpecial = checkForInt(isNull(basicSpecial));
+						int standardBasicSpecial = checkForNegativeInt(checkForInt(isNull(basicSpecial)));
 						string standardSpecialProperty = msclr::interop::marshal_as<string>(specialProperty);
 						containerFiles.push_back(new Basic(standardBasic, standardBasicSpecial, standardIsSpecial, standardSpecialProperty));
 					}
@@ -557,7 +543,7 @@ int getxmlContainerdata(std::string containerFile, vector<Customer>& customerFil
 							standardSpecialProperty = "<null>";
 							//Console::Write("\nHeavy Load: " + heavyLoad);
 						}
-						int standardHeavyLoad = checkForInt(isNull(heavyLoad));
+						int standardHeavyLoad = checkForNegativeInt(checkForInt(isNull(heavyLoad)));
 						//string standardSpecialProperty = msclr::interop::marshal_as<string>(specialProperty);
 						containerFiles.push_back(new Heavy(standardHeavy, standardHeavyLoad, standardIsSpecial, standardSpecialProperty));
 					}
@@ -591,7 +577,7 @@ int getxmlContainerdata(std::string containerFile, vector<Customer>& customerFil
 								//Console::Write("\nSpecial Property: " + specialProperty);
 							}
 						}
-						int standardHeavySpecial = checkForInt(isNull(heavySpecial));
+						int standardHeavySpecial = checkForNegativeInt(checkForInt(isNull(heavySpecial)));
 						string standardSpecialProperty = msclr::interop::marshal_as<string>(specialProperty);
 						containerFiles.push_back(new Heavy(standardHeavy, standardHeavySpecial, standardIsSpecial, standardSpecialProperty));
 
@@ -607,7 +593,7 @@ int getxmlContainerdata(std::string containerFile, vector<Customer>& customerFil
 							standardSpecialProperty = "<null>";
 							//Console::Write("\nRefrigerated Load: " + refrigeratedLoad);
 						}
-						int standardRefrigeratedLoad = checkForInt(isNull(refrigeratedLoad));
+						int standardRefrigeratedLoad = checkForNegativeInt(checkForInt(isNull(refrigeratedLoad)));
 						//string standardSpecialProperty = msclr::interop::marshal_as<string>(specialProperty);
 						containerFiles.push_back(new Refrigerated(standardRefrigerator, standardRefrigeratedLoad, standardIsSpecial, standardSpecialProperty));
 
@@ -642,7 +628,7 @@ int getxmlContainerdata(std::string containerFile, vector<Customer>& customerFil
 								//Console::Write("\nSpecial Property: " + specialProperty);
 							}
 						}
-						int standardRefrigeratedSpecial = checkForInt(isNull(refrigeratedSpecial));
+						int standardRefrigeratedSpecial = checkForNegativeInt(checkForInt(isNull(refrigeratedSpecial)));
 						string standardSpecialProperty = msclr::interop::marshal_as<string>(specialProperty);
 						containerFiles.push_back(new Refrigerated(standardRefrigerator, standardRefrigeratedSpecial, standardIsSpecial, standardSpecialProperty));
 
@@ -658,7 +644,7 @@ int getxmlContainerdata(std::string containerFile, vector<Customer>& customerFil
 							standardSpecialProperty = "<null>";
 							//Console::Write("\nLiquid Load: " + liquidLoad);
 						}
-						int standardLiquidLoad = checkForInt(isNull(liquidLoad));
+						int standardLiquidLoad = checkForNegativeInt(checkForInt(isNull(liquidLoad)));
 						//string standardSpecialProperty = msclr::interop::marshal_as<string>(specialProperty);
 						containerFiles.push_back(new Liquid(standardLiquid, standardLiquidLoad, standardIsSpecial, standardSpecialProperty));
 
@@ -694,7 +680,7 @@ int getxmlContainerdata(std::string containerFile, vector<Customer>& customerFil
 								//Console::Write("\nSpecial Property: " + specialProperty);
 							}
 						}
-						int standardLiquidSpecial = checkForInt(isNull(liquidSpecial));
+						int standardLiquidSpecial = checkForNegativeInt(checkForInt(isNull(liquidSpecial)));
 						string standardSpecialProperty = msclr::interop::marshal_as<string>(specialProperty);
 						containerFiles.push_back(new Liquid(standardLiquid, standardLiquidSpecial, standardIsSpecial, standardSpecialProperty));
 
@@ -739,13 +725,14 @@ int getxmlContainerdata(std::string containerFile, vector<Customer>& customerFil
 						//Console::Write("\nYear: " + year);
 					}
 				}
-				standardShipDate = checkForInt(isNull(date));
-				standardShipMonth = checkForInt(isNull(month));
-				standardShipYear = checkForInt(isNull(year));
+				standardShipDate = checkForNegativeInt(checkForInt(isNull(date)));
+				standardShipMonth = checkForNegativeInt(checkForInt(isNull(month)));
+				standardShipYear = checkForNegativeInt(checkForInt(isNull(year)));
 
 			}
 		}
-		string standardCustID = msclr::interop::marshal_as<string>(custID);
+
+
 		string standardName = msclr::interop::marshal_as<string>(name);
 
 		string standardCompany = msclr::interop::marshal_as<string>(company);
@@ -755,7 +742,7 @@ int getxmlContainerdata(std::string containerFile, vector<Customer>& customerFil
 
 
 		//Insert customer
-		Customer customers(standardCustID, standardName, standardAge, standardCompany, standardDestinationCountry, standardDestinationPort,
+		Customer customers(custID, standardName, standardAge, standardCompany, standardDestinationCountry, standardDestinationPort,
 			standardShipDate, standardShipMonth, standardShipYear, containerFiles);
 
 		customerFiles.push_back(customers);
@@ -941,6 +928,7 @@ int importXML(string folderPath)
 	vector<Ship> shipFiles;
 	vector<Customer> customerFiles;
 	vector<Container *> containerFiles;
+	vector<string> customerID;
 
 	int count = 0;
 	
@@ -964,6 +952,8 @@ int importXML(string folderPath)
 			}
 			catch (const std::exception& ex)
 			{
+				cout << "\nError Detected in Ship File : " << endl;
+				cout << "======================================================= " << endl;
 				cout << files[i]<< endl;
 				cout << ex.what();
 			}
@@ -971,10 +961,12 @@ int importXML(string folderPath)
 		}
 		if (checkContainerFile(files[i]) == true) {
 			try {
-				getxmlContainerdata(files[i], customerFiles, containerFiles);
+				getxmlContainerdata(files[i], customerFiles, containerFiles,customerID);
 			}
 			catch (const std::exception& ex)
 			{
+				cout << "\nError Detected in Container File : " << endl;
+				cout << "======================================================= " << endl;
 				cout << files[i] << endl;
 				cout << ex.what();
 			}
