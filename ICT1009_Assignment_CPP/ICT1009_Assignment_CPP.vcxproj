@@ -76,12 +76,17 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\KH\Source\Repos\ICT1009_CPP_Project\External Lib\dirent-1.21;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\KH\Source\Repos\ICT1009_CPP_Project\External Lib\dirent-1.21;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>C:\Users\KH\Source\Repos\ICT1009_CPP_Project\External Lib\dirent-1.21;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\KH\Source\Repos\ICT1009_CPP_Project\External Lib\dirent-1.21;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>m</ExecutablePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,6 +164,7 @@
     <ClInclude Include="importXML.h" />
     <ClInclude Include="Liquid.h" />
     <ClInclude Include="Refrigerated.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Ship.h" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +176,9 @@
     <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="MinShipsSort.cpp" />
     <ClCompile Include="Ship.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ICT1009_Assignment_CPP.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
