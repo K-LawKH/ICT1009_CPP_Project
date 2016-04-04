@@ -149,11 +149,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Basic.h" />
+    <ClInclude Include="concol.h" />
     <ClInclude Include="Container.h" />
     <ClInclude Include="CRUDFunction.h" />
     <ClInclude Include="Customer.h" />
+    <ClInclude Include="dirent.h" />
     <ClInclude Include="FileDialog.h" />
     <ClInclude Include="Heavy.h" />
+    <ClInclude Include="importXML.h" />
     <ClInclude Include="Liquid.h" />
     <ClInclude Include="Refrigerated.h" />
     <ClInclude Include="Ship.h" />
@@ -162,6 +165,8 @@
     <ClCompile Include="Container.cpp" />
     <ClCompile Include="CRUDFunction.cpp" />
     <ClCompile Include="Customer.cpp" />
+    <ClCompile Include="FileDialog.cpp" />
+    <ClCompile Include="importXML.cpp" />
     <ClCompile Include="mainMenu.cpp" />
     <ClCompile Include="MinShipsSort.cpp" />
     <ClCompile Include="Ship.cpp" />
