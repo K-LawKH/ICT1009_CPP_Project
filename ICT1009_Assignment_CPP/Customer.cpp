@@ -88,6 +88,18 @@ bool Customer::updateCust(string name, int age, string company) {
 	return true;
 }
 
+int Customer::getDay() {
+	return this->day;
+}
+
+int Customer::getMonth() {
+	return this->month;
+}
+
+int Customer::getYear() {
+	return this->year;
+}
+
 ostream& operator<<(ostream& out, const Customer& aCust) {
 	out << setfill('-') << setw(40) << "-" << endl;
 	out << "Customer ID " << aCust.id  << endl;

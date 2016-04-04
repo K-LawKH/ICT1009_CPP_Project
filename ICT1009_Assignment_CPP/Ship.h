@@ -16,7 +16,7 @@ private:
 	double basicPrice, heavyPrice, refrigeratedPrice, liquidPrice, specialPrice;
 
 	//For Task 3 - 5
-	int currentMaxLoad, currentBasicLoad, currentHeavyLoad, currentRefrigLoad, currentLiquidLoad;
+	int currentMaxLoad = 0, currentBasicLoad = 0, currentHeavyLoad = 0, currentRefrigLoad = 0, currentLiquidLoad = 0;
 	int currentSpecialTotal = 0;
 	int currentSpecialBasic = 0;
 	int currentSpecialHeavy = 0;
@@ -51,6 +51,9 @@ public:
 	void setCountry(string);
 	string getPort() const;
 	void setPort(string);
+	int getDay();
+	int getMonth();
+	int getYear();
 
 	int getMaxLoad() const;
 	void setMaxLoad(int);
@@ -77,29 +80,27 @@ public:
 	void setSpecialPrice(double);
 
 	double getCurrentCost() const;
+
 	void setCurrentCost(double);
 
-	int getCurrentMaxLoad() const;
-	void setCurrentMaxLoad(int);
 	int getCurrentBasicLoad() const;
-	void setCurrentBasicLoad(int);
+	int setCurrentBasicLoad(int);
 	int getCurrentHeavyLoad() const;
-	void setCurrentHeavyLoad(int);
+	int setCurrentHeavyLoad(int);
 	int getCurrentRefrigLoad() const;
-	void setCurrentRefrigLoad(int);
+	int setCurrentRefrigLoad(int);
 	int getCurrentLiquidLoad() const;
-	void setCurrentLiquidLoad(int);
+	int setCurrentLiquidLoad(int);
 
 	int getCurrentSpecialTotal() const;
-	void setCurrentSpecialTotal(int);
 	int getCurrentSpecialBasic() const;
-	void setCurrentSpecialBasic(int);
+	int setCurrentSpecialBasic(int);
 	int getCurrentSpecialHeavy() const;
-	void setCurrentSpecialHeavy(int);
+	int setCurrentSpecialHeavy(int);
 	int getCurrentSpecialLiquid() const;
-	void setCurrentSpecialLiquid(int);
+	int setCurrentSpecialLiquid(int);
 	int getCurrentSpecialRefrig() const;
-	void setCurrentSpecialRefrig(int);
+	int setCurrentSpecialRefrig(int);
 
 	bool getBasicIsFull() const;
 	void setBasicIsFull(bool);
