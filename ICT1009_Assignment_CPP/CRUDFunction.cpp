@@ -36,4 +36,5 @@ vector<Ship> deleteShip(vector<Ship> shipsArr, int pos) {
 }
 
 vector<Ship> addNewShip(vector<Ship> shipsArr) {
+	return shipsArr;
 }

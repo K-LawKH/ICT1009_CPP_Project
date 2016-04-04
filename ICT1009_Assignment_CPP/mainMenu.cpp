@@ -4,10 +4,10 @@
 #include<iomanip>
 #include "FileDialog.h"
 #include "importXML.h"
-
+#include"concol.h"
 using namespace std;
 using std::setw;
-#include"concol.h"
+
 int menu() {
 	int choice = 0;
 	cout << endl;
